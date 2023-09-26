@@ -6,3 +6,4 @@
 !meson.build
 !config.yaml
 !interception-vimproved.cpp
+!CMakeList.txt

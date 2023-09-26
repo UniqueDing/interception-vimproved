@@ -2,35 +2,18 @@
   ontap: KEY_ESC
   onhold: KEY_LEFTCTRL
 
-- intercept: KEY_ENTER
-  # not necessary: ontap: KEY_ENTER is inferred if left empty
-  onhold: KEY_RIGHTCTRL
-
-# this is a layer. hold space (onhold) contains several remappings
-- intercept: KEY_SPACE
+- intercept: KEY_TAB
   onhold:
 
-  # special chars
-  - from: KEY_E
-    to: KEY_ESC
-
-  # alternative syntax
-  - {from: KEY_D, to: KEY_DELETE}
-  - {from: KEY_B, to: KEY_BACKSPACE}
-
-  # vim home row
   - {from: KEY_H, to: KEY_LEFT}
   - {from: KEY_J, to: KEY_DOWN}
   - {from: KEY_K, to: KEY_UP}
   - {from: KEY_L, to: KEY_RIGHT}
+  - {from: KEY_G, to: KEY_DELETE}
+  - {from: KEY_B, to: KEY_BACKSPACE}
+  - {from: KEY_COMMA, to: KEY_HOME}
+  - {from: KEY_DOT, to: KEY_END}
 
-  # vim above home row
-  - {from: KEY_Y, to: KEY_HOME}
-  - {from: KEY_U, to: KEY_PAGEDOWN}
-  - {from: KEY_I, to: KEY_PAGEUP}
-  - {from: KEY_O, to: KEY_END}
-
-  # number row, to F keys
   - {from: KEY_1, to: KEY_F1}
   - {from: KEY_2, to: KEY_F2}
   - {from: KEY_3, to: KEY_F3}
@@ -44,11 +27,15 @@
   - {from: KEY_MINUS, to: KEY_F11}
   - {from: KEY_EQUAL, to: KEY_F12}
 
-  # xf86 audio
-  - {from: KEY_M, to: KEY_MUTE}
-  - {from: KEY_COMMA, to: KEY_VOLUMEDOWN}
-  - {from: KEY_DOT, to: KEY_VOLUMEUP}
-
-  # mouse navigation
-  - {from: BTN_LEFT, to: BTN_BACK}
-  - {from: BTN_RIGHT, to: BTN_FORWARD}
+  - {from: KEY_Q, to: KEY_1}
+  - {from: KEY_W, to: KEY_2}
+  - {from: KEY_E, to: KEY_3}
+  - {from: KEY_R, to: KEY_4}
+  - {from: KEY_T, to: KEY_5}
+  - {from: KEY_Y, to: KEY_6}
+  - {from: KEY_U, to: KEY_7}
+  - {from: KEY_I, to: KEY_8}
+  - {from: KEY_O, to: KEY_9}
+  - {from: KEY_P, to: KEY_0}
+  - {from: KEY_LEFTBRACKET, to: KEY_MINUS}
+  - {from: KEY_RIGHTBRACKET, to: KEY_EQUAL}

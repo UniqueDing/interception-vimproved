@@ -1,9 +1,10 @@
-#include <ranges>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <optional>
 #include <linux/input.h>
 #include <yaml-cpp/yaml.h>
+#include <algorithm>
 
 class Intercept;
 using Event = input_event;
@@ -22,7 +23,9 @@ auto is_modifier(Key key) -> bool {
     KEY_LEFTSHIFT, KEY_RIGHTSHIFT, KEY_LEFTCTRL, KEY_RIGHTCTRL,
     KEY_LEFTALT, KEY_RIGHTALT, KEY_LEFTMETA, KEY_RIGHTMETA, KEY_CAPSLOCK,
   };
-  return MODIFIERS.contains(key);
+  // return MODIFIERS.contains(key);
+  return std::find(MODIFIERS.begin(), MODIFIERS.end(), key) != MODIFIERS.end();
+  return MODIFIERS.find(key) != MODIFIERS.end();
 }
 
 // auxilliary renamings for accessibility
@@ -178,9 +181,15 @@ private:
   Mapping mapping;
   std::unordered_set<Key> held_keys;
 
-  auto is_mapped(Event input) -> bool { return mapping.contains(input.code); }
+  auto is_mapped(Event input) -> bool {
+    // return mapping.contains(input.code);
+    return mapping.find(input.code) != mapping.end();
+  }
 
-  auto is_held(Event input) -> bool { return held_keys.contains(input.code); }
+  auto is_held(Event input) -> bool {
+    // return held_keys.contains(input.code);
+    return held_keys.find(input.code) != held_keys.end();
+  }
 
   using Intercept::remapped;
   auto remapped(Event input) -> Event { return remapped(input, mapping[input.code]); }
@@ -367,8 +376,11 @@ auto read_config_or_default(int argc, char** argv) -> Intercepts {
   };
   try {
     auto intercepts = Intercepts{};
-    std::ranges::for_each(YAML::LoadFile(argv[1]), read_intercept);
-    std::ranges::merge(modifiers, layers, std::back_inserter(intercepts));
+    // std::ranges::for_each(YAML::LoadFile(argv[1]), read_intercept);
+    auto file = YAML::LoadFile(argv[1]);
+    std::for_each(file.begin(), file.end(), read_intercept);
+    // std::ranges::merge(modifiers, layers, std::back_inserter(intercepts));
+    std::merge(modifiers.begin(), modifiers.end(), layers.begin(), layers.end(), std::back_inserter(intercepts));
     return intercepts;
   } catch (...) {
     return default_config();
